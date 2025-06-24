@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="smile_sunshine_toysModel1.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="categories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="deliverynotes">
+    <Key>
+      <PropertyRef Name="DeliveryNoteID" />
+    </Key>
+    <Property Name="DeliveryNoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShipmentID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="SalesOrderNo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EstimatedDeliveryDate" Type="date" Nullable="false" />
+    <Property Name="Status" Type="enum" Nullable="false" />
+  </EntityType>
+  <EntityType Name="departments">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="feedback">
+    <Key>
+      <PropertyRef Name="FeedbackID" />
+    </Key>
+    <Property Name="FeedbackID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Comments" Type="text" Nullable="false" />
+    <Property Name="SubmittedDate" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="inventory">
+    <Key>
+      <PropertyRef Name="InventoryID" />
+    </Key>
+    <Property Name="InventoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="SupplierID" Type="int" Nullable="false" />
+    <Property Name="WarehouseLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="QuantityReceived" Type="int" Nullable="false" />
+    <Property Name="DamagedItems" Type="int" Nullable="false" />
+    <Property Name="DateReceived" Type="date" Nullable="false" />
+    <Property Name="Remarks" Type="text" />
+  </EntityType>
+  <EntityType Name="orderdetails">
+    <Key>
+      <PropertyRef Name="OrderDetailID" />
+    </Key>
+    <Property Name="OrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerID" Type="varchar" MaxLength="10" />
+    <Property Name="OrderDate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="Status" Type="enum" Nullable="false" />
+    <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SupplierID" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="QuantityPerUnit" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="UnitsInStock" Type="int" Nullable="false" />
+    <Property Name="UnitsOnOrder" Type="int" Nullable="false" />
+    <Property Name="ReorderLevel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="servicerequests">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="DepartmentID" Type="int" Nullable="false" />
+    <Property Name="Item" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="enum" Nullable="false" />
+    <Property Name="RequestDate" Type="date" Nullable="false" />
+    <Property Name="Description" Type="text" Nullable="false" />
+    <Property Name="DocsPath" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="shipments">
+    <Key>
+      <PropertyRef Name="ShipmentID" />
+    </Key>
+    <Property Name="ShipmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="Carrier" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DeliverySchedule" Type="date" Nullable="false" />
+    <Property Name="WarehouseLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustomerNotes" Type="text" />
+  </EntityType>
+  <EntityType Name="suppliers">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Contact" Type="varchar" MaxLength="100" />
+    <Property Name="Reliability" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="CreatedDate" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Role" Type="enum" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="Address" Type="varchar" MaxLength="255" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="10" />
+    <Property Name="CreatedDate" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
+  <Association Name="deliverynotes_ibfk_1">
+    <End Role="shipments" Type="Self.shipments" Multiplicity="1" />
+    <End Role="deliverynotes" Type="Self.deliverynotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shipments">
+        <PropertyRef Name="ShipmentID" />
+      </Principal>
+      <Dependent Role="deliverynotes">
+        <PropertyRef Name="ShipmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="deliverynotes_ibfk_2">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="deliverynotes" Type="Self.deliverynotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="deliverynotes">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="feedback_ibfk_1">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="inventory_ibfk_1">
+    <End Role="products" Type="Self.products" Multiplicity="1" />
+    <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="inventory">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="inventory_ibfk_2">
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="1" />
+    <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="inventory">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetails_ibfk_1">
+    <End Role="orders" Type="Self.orders" Multiplicity="1" />
+    <End Role="orderdetails" Type="Self.orderdetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="orderdetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetails_ibfk_2">
+    <End Role="products" Type="Self.products" Multiplicity="1" />
+    <End Role="orderdetails" Type="Self.orderdetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="orderdetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orders_ibfk_1">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="products_ibfk_1">
+    <End Role="suppliers" Type="Self.suppliers" Multiplicity="1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="products_ibfk_2">
+    <End Role="categories" Type="Self.categories" Multiplicity="1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicerequests_ibfk_1">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="servicerequests" Type="Self.servicerequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="servicerequests">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicerequests_ibfk_2">
+    <End Role="departments" Type="Self.departments" Multiplicity="1" />
+    <End Role="servicerequests" Type="Self.servicerequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departments">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="servicerequests">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="shipments_ibfk_1">
+    <End Role="orders" Type="Self.orders" Multiplicity="1" />
+    <End Role="shipments" Type="Self.shipments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="shipments">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_ibfk_1">
+    <End Role="departments" Type="Self.departments" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departments">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="smile_sunshine_toysModel1StoreContainer">
+    <EntitySet Name="categories" EntityType="Self.categories" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="deliverynotes" EntityType="Self.deliverynotes" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="departments" EntityType="Self.departments" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="feedback" EntityType="Self.feedback" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="inventory" EntityType="Self.inventory" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="orderdetails" EntityType="Self.orderdetails" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="products" EntityType="Self.products" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="servicerequests" EntityType="Self.servicerequests" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="shipments" EntityType="Self.shipments" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="suppliers" EntityType="Self.suppliers" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="smile_sunshine_toys" store:Type="Tables" />
+    <AssociationSet Name="deliverynotes_ibfk_1" Association="Self.deliverynotes_ibfk_1">
+      <End Role="shipments" EntitySet="shipments" />
+      <End Role="deliverynotes" EntitySet="deliverynotes" />
+    </AssociationSet>
+    <AssociationSet Name="deliverynotes_ibfk_2" Association="Self.deliverynotes_ibfk_2">
+      <End Role="users" EntitySet="users" />
+      <End Role="deliverynotes" EntitySet="deliverynotes" />
+    </AssociationSet>
+    <AssociationSet Name="feedback_ibfk_1" Association="Self.feedback_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="feedback" EntitySet="feedback" />
+    </AssociationSet>
+    <AssociationSet Name="inventory_ibfk_1" Association="Self.inventory_ibfk_1">
+      <End Role="products" EntitySet="products" />
+      <End Role="inventory" EntitySet="inventory" />
+    </AssociationSet>
+    <AssociationSet Name="inventory_ibfk_2" Association="Self.inventory_ibfk_2">
+      <End Role="suppliers" EntitySet="suppliers" />
+      <End Role="inventory" EntitySet="inventory" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetails_ibfk_1" Association="Self.orderdetails_ibfk_1">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="orderdetails" EntitySet="orderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetails_ibfk_2" Association="Self.orderdetails_ibfk_2">
+      <End Role="products" EntitySet="products" />
+      <End Role="orderdetails" EntitySet="orderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="orders_ibfk_1" Association="Self.orders_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="products_ibfk_1" Association="Self.products_ibfk_1">
+      <End Role="suppliers" EntitySet="suppliers" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="products_ibfk_2" Association="Self.products_ibfk_2">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="servicerequests_ibfk_1" Association="Self.servicerequests_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="servicerequests" EntitySet="servicerequests" />
+    </AssociationSet>
+    <AssociationSet Name="servicerequests_ibfk_2" Association="Self.servicerequests_ibfk_2">
+      <End Role="departments" EntitySet="departments" />
+      <End Role="servicerequests" EntitySet="servicerequests" />
+    </AssociationSet>
+    <AssociationSet Name="shipments_ibfk_1" Association="Self.shipments_ibfk_1">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="shipments" EntitySet="shipments" />
+    </AssociationSet>
+    <AssociationSet Name="users_ibfk_1" Association="Self.users_ibfk_1">
+      <End Role="departments" EntitySet="departments" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

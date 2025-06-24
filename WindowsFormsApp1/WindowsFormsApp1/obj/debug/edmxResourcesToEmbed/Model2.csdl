@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="smile_sunshine_toysModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="products" Relationship="Self.products_ibfk_2" FromRole="categories" ToRole="products" />
+  </EntityType>
+  <EntityType Name="deliverynote">
+    <Key>
+      <PropertyRef Name="DeliveryNoteID" />
+    </Key>
+    <Property Name="DeliveryNoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShipmentID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SalesOrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EstimatedDeliveryDate" Type="DateTime" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="shipment" Relationship="Self.deliverynotes_ibfk_1" FromRole="deliverynotes" ToRole="shipments" />
+    <NavigationProperty Name="user" Relationship="Self.deliverynotes_ibfk_2" FromRole="deliverynotes" ToRole="users" />
+  </EntityType>
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="servicerequests" Relationship="Self.servicerequests_ibfk_2" FromRole="departments" ToRole="servicerequests" />
+    <NavigationProperty Name="users" Relationship="Self.users_ibfk_1" FromRole="departments" ToRole="users" />
+  </EntityType>
+  <EntityType Name="feedback">
+    <Key>
+      <PropertyRef Name="FeedbackID" />
+    </Key>
+    <Property Name="FeedbackID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comments" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SubmittedDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="Self.feedback_ibfk_1" FromRole="feedback" ToRole="users" />
+  </EntityType>
+  <EntityType Name="inventory">
+    <Key>
+      <PropertyRef Name="InventoryID" />
+    </Key>
+    <Property Name="InventoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="WarehouseLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QuantityReceived" Type="Int32" Nullable="false" />
+    <Property Name="DamagedItems" Type="Int32" Nullable="false" />
+    <Property Name="DateReceived" Type="DateTime" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="product" Relationship="Self.inventory_ibfk_1" FromRole="inventory" ToRole="products" />
+    <NavigationProperty Name="supplier" Relationship="Self.inventory_ibfk_2" FromRole="inventory" ToRole="suppliers" />
+  </EntityType>
+  <EntityType Name="orderdetail">
+    <Key>
+      <PropertyRef Name="OrderDetailID" />
+    </Key>
+    <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="order" Relationship="Self.orderdetails_ibfk_1" FromRole="orderdetails" ToRole="orders" />
+    <NavigationProperty Name="product" Relationship="Self.orderdetails_ibfk_2" FromRole="orderdetails" ToRole="products" />
+  </EntityType>
+  <EntityType Name="order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TotalAmount" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="orderdetails" Relationship="Self.orderdetails_ibfk_1" FromRole="orders" ToRole="orderdetails" />
+    <NavigationProperty Name="user" Relationship="Self.orders_ibfk_1" FromRole="orders" ToRole="users" />
+    <NavigationProperty Name="shipments" Relationship="Self.shipments_ibfk_1" FromRole="orders" ToRole="shipments" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="QuantityPerUnit" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
+    <Property Name="UnitsInStock" Type="Int32" Nullable="false" />
+    <Property Name="UnitsOnOrder" Type="Int32" Nullable="false" />
+    <Property Name="ReorderLevel" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="category" Relationship="Self.products_ibfk_2" FromRole="products" ToRole="categories" />
+    <NavigationProperty Name="inventories" Relationship="Self.inventory_ibfk_1" FromRole="products" ToRole="inventory" />
+    <NavigationProperty Name="orderdetails" Relationship="Self.orderdetails_ibfk_2" FromRole="products" ToRole="orderdetails" />
+    <NavigationProperty Name="supplier" Relationship="Self.products_ibfk_1" FromRole="products" ToRole="suppliers" />
+  </EntityType>
+  <EntityType Name="servicerequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+    <Property Name="Item" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RequestDate" Type="DateTime" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocsPath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="department" Relationship="Self.servicerequests_ibfk_2" FromRole="servicerequests" ToRole="departments" />
+    <NavigationProperty Name="user" Relationship="Self.servicerequests_ibfk_1" FromRole="servicerequests" ToRole="users" />
+  </EntityType>
+  <EntityType Name="shipment">
+    <Key>
+      <PropertyRef Name="ShipmentID" />
+    </Key>
+    <Property Name="ShipmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="Carrier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DeliverySchedule" Type="DateTime" Nullable="false" />
+    <Property Name="WarehouseLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerNotes" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="deliverynotes" Relationship="Self.deliverynotes_ibfk_1" FromRole="shipments" ToRole="deliverynotes" />
+    <NavigationProperty Name="order" Relationship="Self.shipments_ibfk_1" FromRole="shipments" ToRole="orders" />
+  </EntityType>
+  <EntityType Name="supplier">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Reliability" Type="Decimal" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="inventories" Relationship="Self.inventory_ibfk_2" FromRole="suppliers" ToRole="inventory" />
+    <NavigationProperty Name="products" Relationship="Self.products_ibfk_1" FromRole="suppliers" ToRole="products" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="65532" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="deliverynotes" Relationship="Self.deliverynotes_ibfk_2" FromRole="users" ToRole="deliverynotes" />
+    <NavigationProperty Name="department" Relationship="Self.users_ibfk_1" FromRole="users" ToRole="departments" />
+    <NavigationProperty Name="feedbacks" Relationship="Self.feedback_ibfk_1" FromRole="users" ToRole="feedback" />
+    <NavigationProperty Name="orders" Relationship="Self.orders_ibfk_1" FromRole="users" ToRole="orders" />
+    <NavigationProperty Name="servicerequests" Relationship="Self.servicerequests_ibfk_1" FromRole="users" ToRole="servicerequests" />
+  </EntityType>
+  <Association Name="products_ibfk_2">
+    <End Role="categories" Type="Self.category" Multiplicity="1" />
+    <End Role="products" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="deliverynotes_ibfk_1">
+    <End Role="shipments" Type="Self.shipment" Multiplicity="1" />
+    <End Role="deliverynotes" Type="Self.deliverynote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shipments">
+        <PropertyRef Name="ShipmentID" />
+      </Principal>
+      <Dependent Role="deliverynotes">
+        <PropertyRef Name="ShipmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="deliverynotes_ibfk_2">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="deliverynotes" Type="Self.deliverynote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="deliverynotes">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicerequests_ibfk_2">
+    <End Role="departments" Type="Self.department" Multiplicity="1" />
+    <End Role="servicerequests" Type="Self.servicerequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departments">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="servicerequests">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_ibfk_1">
+    <End Role="departments" Type="Self.department" Multiplicity="0..1" />
+    <End Role="users" Type="Self.user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departments">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="feedback_ibfk_1">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="feedback">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="inventory_ibfk_1">
+    <End Role="products" Type="Self.product" Multiplicity="1" />
+    <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="inventory">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="inventory_ibfk_2">
+    <End Role="suppliers" Type="Self.supplier" Multiplicity="1" />
+    <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="inventory">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetails_ibfk_1">
+    <End Role="orders" Type="Self.order" Multiplicity="1" />
+    <End Role="orderdetails" Type="Self.orderdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="orderdetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orderdetails_ibfk_2">
+    <End Role="products" Type="Self.product" Multiplicity="1" />
+    <End Role="orderdetails" Type="Self.orderdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="orderdetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="orders_ibfk_1">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="orders" Type="Self.order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="shipments_ibfk_1">
+    <End Role="orders" Type="Self.order" Multiplicity="1" />
+    <End Role="shipments" Type="Self.shipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="shipments">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="products_ibfk_1">
+    <End Role="suppliers" Type="Self.supplier" Multiplicity="1" />
+    <End Role="products" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicerequests_ibfk_1">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="servicerequests" Type="Self.servicerequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="servicerequests">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="smile_sunshine_toysEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="deliverynotes" EntityType="Self.deliverynote" />
+    <EntitySet Name="departments" EntityType="Self.department" />
+    <EntitySet Name="feedbacks" EntityType="Self.feedback" />
+    <EntitySet Name="inventories" EntityType="Self.inventory" />
+    <EntitySet Name="orderdetails" EntityType="Self.orderdetail" />
+    <EntitySet Name="orders" EntityType="Self.order" />
+    <EntitySet Name="products" EntityType="Self.product" />
+    <EntitySet Name="servicerequests" EntityType="Self.servicerequest" />
+    <EntitySet Name="shipments" EntityType="Self.shipment" />
+    <EntitySet Name="suppliers" EntityType="Self.supplier" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="products_ibfk_2" Association="Self.products_ibfk_2">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="deliverynotes_ibfk_1" Association="Self.deliverynotes_ibfk_1">
+      <End Role="shipments" EntitySet="shipments" />
+      <End Role="deliverynotes" EntitySet="deliverynotes" />
+    </AssociationSet>
+    <AssociationSet Name="deliverynotes_ibfk_2" Association="Self.deliverynotes_ibfk_2">
+      <End Role="users" EntitySet="users" />
+      <End Role="deliverynotes" EntitySet="deliverynotes" />
+    </AssociationSet>
+    <AssociationSet Name="servicerequests_ibfk_2" Association="Self.servicerequests_ibfk_2">
+      <End Role="departments" EntitySet="departments" />
+      <End Role="servicerequests" EntitySet="servicerequests" />
+    </AssociationSet>
+    <AssociationSet Name="users_ibfk_1" Association="Self.users_ibfk_1">
+      <End Role="departments" EntitySet="departments" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+    <AssociationSet Name="feedback_ibfk_1" Association="Self.feedback_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="feedback" EntitySet="feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="inventory_ibfk_1" Association="Self.inventory_ibfk_1">
+      <End Role="products" EntitySet="products" />
+      <End Role="inventory" EntitySet="inventories" />
+    </AssociationSet>
+    <AssociationSet Name="inventory_ibfk_2" Association="Self.inventory_ibfk_2">
+      <End Role="suppliers" EntitySet="suppliers" />
+      <End Role="inventory" EntitySet="inventories" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetails_ibfk_1" Association="Self.orderdetails_ibfk_1">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="orderdetails" EntitySet="orderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="orderdetails_ibfk_2" Association="Self.orderdetails_ibfk_2">
+      <End Role="products" EntitySet="products" />
+      <End Role="orderdetails" EntitySet="orderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="orders_ibfk_1" Association="Self.orders_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="shipments_ibfk_1" Association="Self.shipments_ibfk_1">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="shipments" EntitySet="shipments" />
+    </AssociationSet>
+    <AssociationSet Name="products_ibfk_1" Association="Self.products_ibfk_1">
+      <End Role="suppliers" EntitySet="suppliers" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="servicerequests_ibfk_1" Association="Self.servicerequests_ibfk_1">
+      <End Role="users" EntitySet="users" />
+      <End Role="servicerequests" EntitySet="servicerequests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
